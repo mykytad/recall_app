@@ -35,6 +35,7 @@ jobs:
     env:
       RAILS_ENV: test
       DATABASE_URL: postgres://postgres:postgres@localhost:5432/recall_app_test
+      RUBOCOP_CACHE_ROOT: tmp/rubocop_cache
 
     steps:
       - name: Checkout
@@ -48,6 +49,9 @@ jobs:
 
       - name: Prepare database
         run: bin/rails db:prepare
+
+      - name: Run RuboCop
+        run: bundle exec rubocop
 
       - name: Check autoloading
         run: bin/rails zeitwerk:check
